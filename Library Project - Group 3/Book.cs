@@ -7,7 +7,7 @@ namespace Library_Project___Group_3
 		public string Title { get; set; }
 		public string Author { get; set; }
 		public string Status { get; set; }
-		public string DueDate { get; set; }
+		public DateTime DueDate { get; set; }
 	
 		//constructor
 		public Book(string _title, string _author, string _status)
@@ -15,10 +15,10 @@ namespace Library_Project___Group_3
 			Title = _title;
 			Author = _author;
 			Status = _status;
-			DueDate = "";
+			DueDate = DateTime.Now;
 		}
 		//overload
-		public Book(string _title, string _author, string _status, string _dueDate)
+		public Book(string _title, string _author, string _status, DateTime _dueDate)
 		{
 			Title = _title;
 			Author = _author;
@@ -31,18 +31,20 @@ namespace Library_Project___Group_3
 		{
 			if (Status == "checked out")
 			{
-				Console.WriteLine($"{Title}, by: {Author}, status: {Status}, due by: {DueDate}");
+				Console.WriteLine(String.Format("{0,-40} by: {1, -30} status: {2, -20} due by:{3, 10}", Title, Author, Status, DueDate));
 			}
 			else if (Status == "on shelf")
 			{
-                Console.WriteLine( $"{Title}, by: {Author}, status: {Status}");
+                Console.WriteLine(String.Format("{0,-40} by: {1, -30} status: {2, -20}", Title, Author, Status));
 
-			}
-			else
+            }
+            else
 			{
                 Console.WriteLine( "Invalid"); //visit this later
 			}
 		}
+
+
 
     }
 }

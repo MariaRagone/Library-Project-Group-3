@@ -1,1 +1,15 @@
-Where the Sidewalk Ends|Shel Silverstein|on shelf
+The Great Gatsby|F. Scott Fitzgerald|on shelf
+Harry Potter and the Sorcerer's Stone|J.K. Rowling|checked out
+To Kill a Mockingbird|Harper Lee|on shelf
+The Hobbit|J.R.R. Tolkein|checked out
+1984|George Orwell|on shelf
+Siddhartha|Herman Hesse|on shelf
+For Whom the Bell Tolls|Ernest Hemingway|checked out
+Shining|Stephen King|on shelf
+The Hobbit|J.R.R. Tolkein|on shelf
+For Whom the Bell Tolls|Ernest Hemingway|checked out
+The Shining|Stephen King|on shelf
+Bossypants|Tina Fey|checked out
+Me Talk Pretty One Day|David Sedaris|on shelf
+Where'd You Go, Bernadette|Maria Semple|on shelf
+The Hitchhiker's Guide to the Galaxy|Douglas Adams|on shelf

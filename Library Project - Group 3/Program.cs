@@ -4,6 +4,7 @@ using System.Reflection;
 using System;
 using System.Net.NetworkInformation;
 using System.Runtime.Intrinsics.X86;
+using Microsoft.VisualBasic;
 
 string filePath = "../../../LibraryDatabase.txt";
 if (File.Exists(filePath) == false)
@@ -35,21 +36,22 @@ while (true)
     }
 }
 reader.Close();
+DateTime DueDate = DateTime.Now.AddDays(14);
 
 List<Book> books = new List<Book>()
 {
     new Book("The Great Gatsby", "F. Scott Fitzgerald", "on shelf"),
-    new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling","checked out"),
+    new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling","checked out", DueDate),
     new Book("To Kill a Mockingbird","Harper Lee", "on shelf"),    
-    new Book("The Hobbit", "J.R.R. Tolkein", "checked out"),
+    new Book("The Hobbit", "J.R.R. Tolkein", "checked out", DueDate),
     new Book("1984", "George Orwell", "on shelf"),
     new Book("Siddhartha", "Herman Hesse", "on shelf"),
-    new Book("For Whom the Bell Tolls", "Ernest Hemingway", "checked out"),
+    new Book("For Whom the Bell Tolls", "Ernest Hemingway", "checked out", DueDate),
     new Book("Shining", "Stephen King", "on shelf"),
     new Book("The Hobbit", "J.R.R. Tolkein", "on shelf"),
-    new Book("For Whom the Bell Tolls", "Ernest Hemingway", "checked out", "08-25-23"),
+    new Book("For Whom the Bell Tolls", "Ernest Hemingway", "checked out", DueDate),
     new Book("The Shining", "Stephen King", "on shelf"),    
-    new Book("Bossypants", "Tina Fey", "checked out", "09-16-23"),
+    new Book("Bossypants", "Tina Fey", "checked out", DueDate),
     new Book("Me Talk Pretty One Day", "David Sedaris", "on shelf"),
     new Book("Where'd You Go, Bernadette", "Maria Semple", "on shelf"),
     new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "on shelf")
@@ -57,13 +59,32 @@ List<Book> books = new List<Book>()
 };
 
 
-
 foreach (Book b in books)
 {
     b.GetDetails();
 }
 
+string Status = "";
+StreamWriter writer = new StreamWriter(filePath);
+foreach (Book bk in books)
+{
+    //name|age|grade
+    if (Status == "checked out")
+    {
+    writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}|{bk.DueDate}");
 
+    }
+    else
+    {
+        writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}");
+
+    }
+}
+writer.Close();
+
+
+
+Console.WriteLine("What book do you want to view?");
 
 //bool runProgram = true;
 //while (runProgram)
