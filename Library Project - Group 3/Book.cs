@@ -17,30 +17,30 @@ namespace Library_Project___Group_3
 			Status = _status;
 			DueDate = "";
 		}
-        //overload
-        public Book(string _title, string _author, string _status, string _dueDate)
-        {
-            Title = _title;
-            Author = _author;
-            Status = _status;
-            DueDate = _dueDate;
-        }
+		//overload
+		public Book(string _title, string _author, string _status, string _dueDate)
+		{
+			Title = _title;
+			Author = _author;
+			Status = _status;
+			DueDate = _dueDate;
+		}
 
 		//methods
-		public string GetDetails()
+		public void GetDetails()
 		{
 			if (Status == "checked out")
 			{
-				return $"{Title}, by: {Author}, status: {Status}, due by: {DueDate}";
+				Console.WriteLine($"{Title}, by: {Author}, status: {Status}, due by: {DueDate}");
 			}
 			else if (Status == "on shelf")
 			{
-				return $"{Title}, by: {Author}, status: {Status}";
+                Console.WriteLine( $"{Title}, by: {Author}, status: {Status}");
 
 			}
 			else
 			{
-				return "Invalid"; //visit this later
+                Console.WriteLine( "Invalid"); //visit this later
 			}
 		}
 
