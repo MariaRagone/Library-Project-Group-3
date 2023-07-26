@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Reflection;
+
 namespace Library_Project___Group_3
 {
 	public class Book
@@ -44,8 +47,12 @@ namespace Library_Project___Group_3
 			}
 		}
 
-
+        public override string ToString()
+        {
+            return String.Format("{0,-40} by: {1, -30} {2, -20}", Title, Author, Status);
+        }
+    }
 
     }
-}
+
 

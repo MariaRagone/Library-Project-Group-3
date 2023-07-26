@@ -5,6 +5,7 @@ using System;
 using System.Net.NetworkInformation;
 using System.Runtime.Intrinsics.X86;
 using Microsoft.VisualBasic;
+using System.Runtime.ConstrainedExecution;
 
 string filePath = "../../../LibraryDatabase.txt";
 if (File.Exists(filePath) == false)
@@ -59,19 +60,23 @@ List<Book> books = new List<Book>()
 };
 
 
-foreach (Book b in books)
-{
-    b.GetDetails();
-}
+DisplayMenu(books);
+
+//for (int i = 0; i < books.Count; i++)
+//{
+//    Console.WriteLine($"{i + 1}. {books[i]}");
+//}
+
+Console.WriteLine("What book do you want to view?");
+
 
 string Status = "";
 StreamWriter writer = new StreamWriter(filePath);
 foreach (Book bk in books)
 {
-    //name|age|grade
     if (Status == "checked out")
     {
-    writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}|{bk.DueDate}");
+        writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}|{bk.DueDate}");
 
     }
     else
@@ -82,9 +87,14 @@ foreach (Book bk in books)
 }
 writer.Close();
 
-
-
-Console.WriteLine("What book do you want to view?");
+//methods
+static void DisplayMenu(List<Book> bookList)
+{
+    for (int i = 0; i < bookList.Count; i++)
+    {
+        Console.WriteLine($"{i+1}. {bookList[i]}");
+    }
+}
 
 //bool runProgram = true;
 //while (runProgram)
