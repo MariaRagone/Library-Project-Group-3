@@ -15,6 +15,7 @@ if (File.Exists(filePath) == false)
     tempWriter.Close();
 }
 StreamReader reader = new StreamReader(filePath);
+    List<Book> searchResults = new List<Book>();
 List<Book> allBooks = new List<Book>();
 while (true)
 {
@@ -81,26 +82,26 @@ writer.Close();
 
 ////PSEUDOCODE
 //start program and display menu options
-    //Chose to display all books or search, or retrun book
-        //if display all books as numbered list
-            //show the entire list of books
-            //search by author, title, keyword
-    //if search
-        //prompt the user to search by author, title, or keyword
-            //display the searchlist that matches search term - list is numbered
-            //at the end of the list there is extra numbers for checkout, search again, see entire list, quit
-                //if checkout
-                    //change status and due date for selected book
-                //if search again
-                    //loop the "search" if statement above
-                //if display entire list
-                    //search by author, title, keyword
-                //if return book
-                    //show the list of books that are checked out (status = checked out)
-                    //which book do you want to return?
-                        //change status and remove due date for selected book
-                //if quit
-                //quit the program
+//Chose to display all books or search, or retrun book
+//if display all books as numbered list
+//show the entire list of books
+//search by author, title, keyword
+//if search
+//prompt the user to search by author, title, or keyword
+//display the searchlist that matches search term - list is numbered
+//at the end of the list there is extra numbers for checkout, search again, see entire list, quit
+//if checkout
+//change status and due date for selected book
+//if search again
+//loop the "search" if statement above
+//if display entire list
+//search by author, title, keyword
+//if return book
+//show the list of books that are checked out (status = checked out)
+//which book do you want to return?
+//change status and remove due date for selected book
+//if quit
+//quit the program
 
 Console.WriteLine("Welcome to the libary");
 Console.WriteLine("Choose an option:");
@@ -113,7 +114,7 @@ if (input == 1)
     //DISPLAY ALL BOOKS
     DisplayMenu(books);
     Console.WriteLine("");
-    SearchOption(books);
+    searchResults = SearchOption(books);
     Console.WriteLine("Choose an option:");
     Console.WriteLine("1. Check out");
     Console.WriteLine("2. Search again");
@@ -133,7 +134,7 @@ else if (input == 2)
     if (input2 == 1)
     {
         //Make a method for check out process
-        CheckOut(input2, books);
+        CheckOut(input2, searchResults);
 
 
     }
@@ -159,14 +160,14 @@ static void DisplayMenu(List<Book> bookList)
 
 }
 
-static void SearchOption(List<Book> bk)
+static List<Book> SearchOption(List<Book> bk)
 {
     Console.WriteLine("Search by Author,Title or keyword");
     string choice = Console.ReadLine().ToLower().Trim();
-
+    List<Book> searchList = new List<Book>();
     if (bk.Any(b => b.Title.ToLower().Trim().Contains(choice)))
     {
-        List<Book> searchList = bk.Where(b => b.Title.ToLower().Trim().Contains(choice)).ToList();
+         searchList = bk.Where(b => b.Title.ToLower().Trim().Contains(choice)).ToList();
 
         DisplayMenu(searchList);
 
@@ -174,7 +175,7 @@ static void SearchOption(List<Book> bk)
 
     else if (bk.Any(b => b.Author.ToLower().Trim().Contains(choice)))
     {
-        List<Book> searchList = bk.Where(b => b.Author.ToLower().Trim().Contains(choice)).ToList();
+         searchList = bk.Where(b => b.Author.ToLower().Trim().Contains(choice)).ToList();
 
         DisplayMenu(searchList);
 
@@ -184,20 +185,32 @@ static void SearchOption(List<Book> bk)
         Console.WriteLine("Not found.");
 
     }
+    return searchList;
 }
 
 static void CheckOut(int i, List<Book> b)
 {
     Console.WriteLine("Which book would you like to check out? Enter number");
-    int result = -1;
-    while (int.TryParse(Console.ReadLine(), out result) == false || result <= 0 || result >= b.Count)
+
+    while (true)
     {
-        Console.WriteLine($"Invalid input. Try again with a number 1 = {b.Count}.");
+        int result = -1;
+        while (int.TryParse(Console.ReadLine(), out result) == false)
+        {
+            Console.WriteLine($"Invalid input. Try again with a number 1 = {b.Count}.");
 
+        }    
+        result = result -1;
+        if (result >= 0 && result < b.Count())
+        {
+        b[result].Status = false;
+
+            Console.WriteLine(b[result]);
+            break;
+        }
+        Console.WriteLine("hi");
     }
-    Console.WriteLine("hi");
 }
-
 //VALIDATOR METHOD
 //public static int GetPositiveInputInt()
 //{
