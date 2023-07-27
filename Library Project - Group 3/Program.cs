@@ -48,9 +48,9 @@ List<Book> books = new List<Book>()
     new Book("1984", "George Orwell", "on shelf"),
     new Book("Siddhartha", "Herman Hesse", "on shelf"),
     new Book("For Whom the Bell Tolls", "Ernest Hemingway", "checked out", DueDate),
-    new Book("Shining", "Stephen King", "on shelf"),
+    new Book("The Stand", "Stephen King", "on shelf"),
     new Book("The Hobbit", "J.R.R. Tolkein", "on shelf"),
-    new Book("For Whom the Bell Tolls", "Ernest Hemingway", "checked out", DueDate),
+    new Book("The Old Man and the Sea", "Ernest Hemingway", "checked out", DueDate),
     new Book("The Shining", "Stephen King", "on shelf"),    
     new Book("Bossypants", "Tina Fey", "checked out", DueDate),
     new Book("Me Talk Pretty One Day", "David Sedaris", "on shelf"),
@@ -67,7 +67,6 @@ DisplayMenu(books);
 //    Console.WriteLine($"{i + 1}. {books[i]}");
 //}
 
-Console.WriteLine("What book do you want to view?");
 
 
 string Status = "";
@@ -87,12 +86,46 @@ foreach (Book bk in books)
 }
 writer.Close();
 
+//revisit whether to search seperately or not allowing character 
+Console.WriteLine("Search by Author,Title or keyword");
+string choice = Console.ReadLine().ToLower().Trim();
+
+if(books.Any(b => b.Title.ToLower().Trim().Contains(choice)))
+{
+    List<Book> searchList = books.Where(b => b.Title.ToLower().Trim().Contains(choice)).ToList();
+
+    foreach (Book bk in searchList)
+    {
+        Console.WriteLine(bk);
+    }
+}
+
+else if (books.Any(b => b.Author.ToLower().Trim().Contains(choice)))
+{
+    List<Book> searchList = books.Where(b => b.Author.ToLower().Trim().Contains(choice)).ToList();
+
+    foreach (Book bk in searchList)
+    {
+        Console.WriteLine(bk);
+    }
+}
+else
+{
+
+}
+
+
+
+
+
+
 //methods
 static void DisplayMenu(List<Book> bookList)
 {
     for (int i = 0; i < bookList.Count; i++)
     {
         Console.WriteLine($"{i+1}. {bookList[i]}");
+        
     }
 }
 
