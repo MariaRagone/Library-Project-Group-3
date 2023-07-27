@@ -133,8 +133,9 @@ else if (input == 2)
     if (input2 == 1)
     {
         //Make a method for check out process
-        Console.WriteLine("Check out");
         CheckOut(input2, books);
+
+
     }
     else if (input2 == 2)
     {
@@ -188,14 +189,13 @@ static void SearchOption(List<Book> bk)
 static void CheckOut(int i, List<Book> b)
 {
     Console.WriteLine("Which book would you like to check out? Enter number");
-    int bookChoice = int.Parse(Console.ReadLine().Trim().ToLower()) -1;
     int result = -1;
     while (int.TryParse(Console.ReadLine(), out result) == false || result <= 0 || result >= b.Count)
     {
         Console.WriteLine($"Invalid input. Try again with a number 1 = {b.Count}.");
 
     }
-    Console.WriteLine(b[bookChoice]);
+    Console.WriteLine("hi");
 }
 
 //VALIDATOR METHOD
