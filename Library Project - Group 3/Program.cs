@@ -15,7 +15,7 @@ if (File.Exists(filePath) == false)
     tempWriter.Close();
 }
 StreamReader reader = new StreamReader(filePath);
-    List<Book> searchResults = new List<Book>();
+List<Book> searchResults = new List<Book>();
 List<Book> allBooks = new List<Book>();
 while (true)
 {
@@ -81,72 +81,124 @@ writer.Close();
 
 
 ////PSEUDOCODE
-//start program and display menu options
-//Chose to display all books or search, or retrun book
-//if display all books as numbered list
-//show the entire list of books
-//search by author, title, keyword
-//if search
-//prompt the user to search by author, title, or keyword
-//display the searchlist that matches search term - list is numbered
-//at the end of the list there is extra numbers for checkout, search again, see entire list, quit
-//if checkout
-//change status and due date for selected book
-//if search again
-//loop the "search" if statement above
-//if display entire list
-//search by author, title, keyword
+//start program and display menu options ***
+//Chose to display all books or search, or retrun book, or quit *** 
+//if display all books as numbered list ***
+//show the entire list of books ***
+//search by author, title, keyword ***
+//if search ***
+//prompt the user to search by author, title, or keyword ***
+//display the searchlist that matches search term - list is numbered ***
+//at the end of the list there is extra numbers for checkout, search again, see entire list, quit ***
+//if checkout ***
+//change status and due date for selected book ***
+
+
+// do you want to search again? Loops back to the beginning ***
+//if search again ***
+//loop the "search" if statement above ***
+//if display entire list ***
+//search by author, title, keyword ***
+
+//quit the program ***
+//if quit ***
+
+
+
+
+//add checked out books to a receipt List
 //if return book
 //show the list of books that are checked out (status = checked out)
 //which book do you want to return?
 //change status and remove due date for selected book
-//if quit
-//quit the program
+
+
+
+//EXTRA IDEAS
+//console clear
+//program asks for Name/username, then checked out books are stored in the username List
+
 
 Console.WriteLine("Welcome to the libary");
-Console.WriteLine("Choose an option:");
-Console.WriteLine("1. Display all books");
-Console.WriteLine("2. Search for a book");
-Console.WriteLine("3. Return a book");
-int input = int.Parse(Console.ReadLine().Trim().ToLower());
-if (input == 1)
-{
-    //DISPLAY ALL BOOKS
-    DisplayMenu(books);
-    Console.WriteLine("");
-    searchResults = SearchOption(books);
-    Console.WriteLine("Choose an option:");
-    Console.WriteLine("1. Check out");
-    Console.WriteLine("2. Search again");
-    Console.WriteLine("3. Quit");
-    //Make a method for check out process
 
-}
-else if (input == 2)
+bool runProgram = true;
+while (runProgram = true)
 {
-    searchResults = SearchOption(books) ;
 
     Console.WriteLine("Choose an option:");
-    Console.WriteLine("1. Check out");
-    Console.WriteLine("2. Search again");
-    Console.WriteLine("3. Quit");
-    int input2 = int.Parse(Console.ReadLine().Trim().ToLower());
-    if (input2 == 1)
+    Console.WriteLine("1. Display all books");
+    Console.WriteLine("2. Search for a book");
+    Console.WriteLine("3. Return a book");
+    Console.WriteLine("4. Quit");
+
+    int input = int.Parse(Console.ReadLine().Trim().ToLower());
+    if (input == 1)
     {
-        //Make a method for check out process
-        CheckOut(input2, searchResults);
+        //DISPLAY ALL BOOKS
+        DisplayMenu(books);
+        Console.WriteLine("");
+        searchResults = SearchOption(books);
+
+        //MAKE THIS A METHOD
+        //---------------------------------------------------
+        Console.WriteLine("Choose an option:");
+        Console.WriteLine("1. Check out");
+        Console.WriteLine("2. Search again");
+        Console.WriteLine("3. Quit");
+        int input2 = int.Parse(Console.ReadLine().Trim().ToLower());
+        if (input2 == 1)
+        {
+            CheckOut(input2, searchResults);
 
 
+        }
+        else if (input2 == 2)
+        {
+            searchResults = SearchOption(books);
+        }
+        else if (input2 == 3)
+        {
+            Console.WriteLine("Goodbye");
+            //add a break to the loop
+        }
+        //---------------------------------------------
+
     }
-    else if (input2 == 2)
+    else if (input == 2)
     {
-        SearchOption(books);
+        searchResults = SearchOption(books);
+
+        Console.WriteLine("Choose an option:");
+        Console.WriteLine("1. Check out");
+        Console.WriteLine("2. Search again");
+        Console.WriteLine("3. Quit");
+        int input2 = int.Parse(Console.ReadLine().Trim().ToLower());
+        if (input2 == 1)
+        {
+            //Make a method for check out process
+            CheckOut(input2, searchResults);
+
+
+        }
+        else if (input2 == 2)
+        {
+            searchResults = SearchOption(books);
+        }
+        else if (input2 == 3)
+        {
+            Console.WriteLine("Goodbye");
+            //add a break to the loop
+        }
     }
-    else if (input2 == 3)
+    else if (input == 4)
     {
         Console.WriteLine("Goodbye");
-        //add a break to the loop
+        //list out any books that they have checked out
+        runProgram = false;
+        break;
     }
+
+
 }
 
 //methods
@@ -167,7 +219,7 @@ static List<Book> SearchOption(List<Book> bk)
     List<Book> searchList = new List<Book>();
     if (bk.Any(b => b.Title.ToLower().Trim().Contains(choice)))
     {
-         searchList = bk.Where(b => b.Title.ToLower().Trim().Contains(choice)).ToList();
+        searchList = bk.Where(b => b.Title.ToLower().Trim().Contains(choice)).ToList();
 
         DisplayMenu(searchList);
 
@@ -175,7 +227,7 @@ static List<Book> SearchOption(List<Book> bk)
 
     else if (bk.Any(b => b.Author.ToLower().Trim().Contains(choice)))
     {
-         searchList = bk.Where(b => b.Author.ToLower().Trim().Contains(choice)).ToList();
+        searchList = bk.Where(b => b.Author.ToLower().Trim().Contains(choice)).ToList();
 
         DisplayMenu(searchList);
 
@@ -190,7 +242,6 @@ static List<Book> SearchOption(List<Book> bk)
 
 static void CheckOut(int i, List<Book> b)
 {
-    
 
     while (true)
     {
@@ -200,16 +251,20 @@ static void CheckOut(int i, List<Book> b)
         {
             Console.WriteLine($"Invalid input. Try again with a number 1 = {b.Count}.");
 
-        }    
-        result = result -1;
-        if (result >= 0 && result < b.Count())
+        }
+        result = result - 1;
+        if (b[result].Status == true && result >= 0 && result < b.Count())
         {
-        b[result].Status = false;
-
-            Console.WriteLine(b[result]);
+            b[result].Status = false;
+            b[result].DueDate = DateTime.Now.AddDays(14);
+            Console.WriteLine($"{b[result]} Due date: {b[result].DueDate}"); //revisit this, can this be shown by calling the GetDetails method?
             break;
         }
-        Console.WriteLine("hi");
+        else
+        {
+            Console.WriteLine("This book is already checked out.");
+            break;
+        }
     }
 }
 //VALIDATOR METHOD
