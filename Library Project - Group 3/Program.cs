@@ -11,7 +11,7 @@ string filePath = "../../../LibraryDatabase.txt";
 if (File.Exists(filePath) == false)
 {
     StreamWriter tempWriter = new StreamWriter(filePath);
-    tempWriter.WriteLine("Where the Sidewalk Ends|Shel Silverstein|on shelf");
+    tempWriter.WriteLine("Where the Sidewalk Ends|Shel Silverstein|true");
     tempWriter.Close();
 }
 StreamReader reader = new StreamReader(filePath);
@@ -32,7 +32,7 @@ while (true)
         //parts[0] = title
         //parts[1] = author
         //parts[2] = status
-        Book b = new Book(parts[0], (parts[1]), (parts[2]));
+        Book b = new Book(parts[0], (parts[1]), (bool.Parse(parts[2])));
         allBooks.Add(b);
     }
 }
@@ -41,30 +41,30 @@ DateTime DueDate = DateTime.Now.AddDays(14);
 
 List<Book> books = new List<Book>()
 {
-    new Book("The Great Gatsby", "F. Scott Fitzgerald", "on shelf"),
-    new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling","checked out", DueDate),
-    new Book("To Kill a Mockingbird","Harper Lee", "on shelf"),
-    new Book("The Hobbit", "J.R.R. Tolkein", "checked out", DueDate),
-    new Book("1984", "George Orwell", "on shelf"),
-    new Book("Siddhartha", "Herman Hesse", "on shelf"),
-    new Book("For Whom the Bell Tolls", "Ernest Hemingway", "checked out", DueDate),
-    new Book("The Stand", "Stephen King", "on shelf"),
-    new Book("The Lord of the Rings", "J.R.R. Tolkein", "on shelf"),
-    new Book("The Old Man and the Sea", "Ernest Hemingway", "checked out", DueDate),
-    new Book("The Shining", "Stephen King", "on shelf"),
-    new Book("Bossypants", "Tina Fey", "checked out", DueDate),
-    new Book("Me Talk Pretty One Day", "David Sedaris", "on shelf"),
-    new Book("Where'd You Go, Bernadette", "Maria Semple", "on shelf"),
-    new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "on shelf")
+    new Book("The Great Gatsby", "F. Scott Fitzgerald", true),
+    new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", false, DueDate),
+    new Book("To Kill a Mockingbird","Harper Lee", true),
+    new Book("The Hobbit", "J.R.R. Tolkein", false, DueDate),
+    new Book("1984", "George Orwell", true),
+    new Book("Siddhartha", "Herman Hesse", true),
+    new Book("For Whom the Bell Tolls", "Ernest Hemingway", false, DueDate),
+    new Book("The Stand", "Stephen King", true),
+    new Book("The Lord of the Rings", "J.R.R. Tolkein", true),
+    new Book("The Old Man and the Sea", "Ernest Hemingway", false, DueDate),
+    new Book("The Shining", "Stephen King", true),
+    new Book("Bossypants", "Tina Fey", false, DueDate),
+    new Book("Me Talk Pretty One Day", "David Sedaris", true),
+    new Book("Where'd You Go, Bernadette", "Maria Semple", true),
+    new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", true)
 
 };
 //-----------------------------------------------------------------------------------
 //puts the list above onto the file
-string Status = "";
+bool Status = true;
 StreamWriter writer = new StreamWriter(filePath);
 foreach (Book bk in books)
 {
-    if (Status == "checked out")
+    if (Status = false)
     {
         writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}|{bk.DueDate}");
 
@@ -114,6 +114,11 @@ if (input == 1)
     DisplayMenu(books);
     Console.WriteLine("");
     SearchOption(books);
+    Console.WriteLine("Choose an option:");
+    Console.WriteLine("1. Check out");
+    Console.WriteLine("2. Search again");
+    Console.WriteLine("3. Quit");
+    //Make a method for check out process
 
 }
 else if (input == 2)
@@ -129,6 +134,7 @@ else if (input == 2)
     {
         //Make a method for check out process
         Console.WriteLine("Check out");
+        CheckOut(input2, books);
     }
     else if (input2 == 2)
     {
@@ -178,6 +184,31 @@ static void SearchOption(List<Book> bk)
 
     }
 }
+
+static void CheckOut(int i, List<Book> b)
+{
+    Console.WriteLine("Which book would you like to check out? Enter number");
+    int bookChoice = int.Parse(Console.ReadLine().Trim().ToLower()) -1;
+    int result = -1;
+    while (int.TryParse(Console.ReadLine(), out result) == false || result <= 0 || result >= b.Count)
+    {
+        Console.WriteLine($"Invalid input. Try again with a number 1 = {b.Count}.");
+
+    }
+    Console.WriteLine(b[bookChoice]);
+}
+
+//VALIDATOR METHOD
+//public static int GetPositiveInputInt()
+//{
+//    int result = -1;
+//    while (int.TryParse(Console.ReadLine(), out result) == false || result <= 0)
+//    {
+//        Console.WriteLine("Invalid input. Try again with a positive number.");
+
+//    }
+//    return result;
+//}
 
 //revisit whether to search seperately or not allowing character 
 
