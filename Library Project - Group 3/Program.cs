@@ -124,7 +124,7 @@ if (input == 1)
 }
 else if (input == 2)
 {
-    SearchOption(books);
+    searchResults = SearchOption(books) ;
 
     Console.WriteLine("Choose an option:");
     Console.WriteLine("1. Check out");
@@ -190,11 +190,12 @@ static List<Book> SearchOption(List<Book> bk)
 
 static void CheckOut(int i, List<Book> b)
 {
-    Console.WriteLine("Which book would you like to check out? Enter number");
+    
 
     while (true)
     {
         int result = -1;
+        Console.WriteLine("Which book would you like to check out? Enter number");
         while (int.TryParse(Console.ReadLine(), out result) == false)
         {
             Console.WriteLine($"Invalid input. Try again with a number 1 = {b.Count}.");
