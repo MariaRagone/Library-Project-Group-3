@@ -30,28 +30,35 @@ namespace Library_Project___Group_3
 		}
 
 		//methods
-		public void GetDetails(bool status)
-		{
-			//status false = checked out
-			//status true = on shelf
-			if (Status == false)
-			{
-				Console.WriteLine(String.Format("{0,-40} by: {1, -30} Available: {2, -20} due by:{3, 10}", Title, Author, Status, DueDate));
-			}
-			else if (Status == true)
-			{
-                Console.WriteLine(String.Format("{0,-40} by: {1, -30} Available: {2, -20}", Title, Author, Status));
+		//public void GetDetails(bool status)
+		//{
+		//	//status false = checked out
+		//	//status true = on shelf
+		//	if (Status == false)
+		//	{
+		//		Console.WriteLine(String.Format("{0,-40} by: {1, -30} Available: {2, -20} due by:{3, 10}", Title, Author, Status, DueDate));
+		//	}
+		//	else if (Status == true)
+		//	{
+  //              Console.WriteLine(String.Format("{0,-40} by: {1, -30} Available: {2, -20}", Title, Author, Status));
 
-            }
-            else
-			{
-                Console.WriteLine( "Invalid"); //visit this later
-			}
-		}
+  //          }
+  //          else
+		//	{
+  //              Console.WriteLine( "Invalid"); //visit this later
+		//	}
+		//}
 
         public override string ToString()
         {
-            return String.Format("{0,-40} by: {1, -30} {2, -20}", Title, Author, Status);
+			if (Status == false)
+			{
+				return String.Format("{0,-39} by: {1, -30} Availability: {2, -15} due by: {3, 10}", Title, Author, "Checked Out", DueDate.ToString("MM/dd/yyyy"));
+			}
+			else 
+			{
+				return String.Format("{0,-39} by: {1, -30} Availability: {2, -15}", Title, Author, "On shelf");
+			}
         }
     }
 

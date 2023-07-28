@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using System.Runtime.Intrinsics.X86;
 using Microsoft.VisualBasic;
 using System.Runtime.ConstrainedExecution;
+using System.Collections.Generic;
 
 string filePath = "../../../LibraryDatabase.txt";
 if (File.Exists(filePath) == false)
@@ -108,10 +109,10 @@ writer.Close();
 
 
 //add checked out books to a receipt List
-//if return book
-//show the list of books that are checked out (status = checked out)
-//which book do you want to return?
-//change status and remove due date for selected book
+//if return book ***
+//show the list of books that are checked out (status = checked out) ***
+//which book do you want to return? ***
+//change status and remove due date for selected book **
 
 
 
@@ -191,12 +192,17 @@ while (runProgram = true)
             //add a break to the loop
         }
     }
-    else if(input == 3)
+    else if (input == 3)
     {
-        int input3 = int.Parse(Console.ReadLine().Trim().ToLower());
-        //checkedOut = CheckOut(input3,books);
-        Console.WriteLine("");
-        searchResults = SearchOption(books);
+        List<Book> currentlyCheckedOut = new List<Book>();
+        if (books.Any(b => b.Status == false))
+        {
+           currentlyCheckedOut = books.Where(b => b.Status == false).ToList();
+
+            DisplayMenu(currentlyCheckedOut);
+
+        }
+        ReturnBook(input, currentlyCheckedOut);
 
     }
     else if (input == 4)
@@ -266,7 +272,7 @@ static void CheckOut(int i, List<Book> b)
         {
             b[result].Status = false;
             b[result].DueDate = DateTime.Now.AddDays(14);
-            Console.WriteLine($"{b[result]} Due date: {b[result].DueDate.ToString("dd/MM/yyyy")}");
+            Console.WriteLine($"{b[result]}");
             break;
             
         }
@@ -292,7 +298,7 @@ static void ReturnBook(int i, List<Book> b)
             Console.WriteLine($"Invalid input. Try again with a number 1 = {b.Count}.");
 
         }
-        result = result - 1;
+        result = result -1;
         if (b[result].Status == false && result >= 0 && result < b.Count())
         {
             b[result].Status = true;
@@ -307,6 +313,18 @@ static void ReturnBook(int i, List<Book> b)
         //}
     }
 }
+
+//static List<Book> DisplayCheckoutList(List<Book> searchResults)
+//{
+//    if (searchResults.Status == false)
+//    {
+//        foreach (Book b in searchResults)
+//        {
+//            checkedOut.Add(b);
+//        }
+//        return checkedOut;
+//    }
+//}
 //List<Book> checkedOut = new List<Book>();
 //checkedOut.Add(b[result]);//revisit this, can this be shown by calling the GetDetails method?
 //return checkedOut;
