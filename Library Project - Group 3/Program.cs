@@ -17,6 +17,7 @@ if (File.Exists(filePath) == false)
 StreamReader reader = new StreamReader(filePath);
 List<Book> searchResults = new List<Book>();
 List<Book> allBooks = new List<Book>();
+List<Book> checkedOut = new List<Book>();
 while (true)
 {
     //name|age|grade
@@ -190,6 +191,14 @@ while (runProgram = true)
             //add a break to the loop
         }
     }
+    else if(input == 3)
+    {
+        int input3 = int.Parse(Console.ReadLine().Trim().ToLower());
+        //checkedOut = CheckOut(input3,books);
+        Console.WriteLine("");
+        searchResults = SearchOption(books);
+
+    }
     else if (input == 4)
     {
         Console.WriteLine("Goodbye");
@@ -257,8 +266,9 @@ static void CheckOut(int i, List<Book> b)
         {
             b[result].Status = false;
             b[result].DueDate = DateTime.Now.AddDays(14);
-            Console.WriteLine($"{b[result]} Due date: {b[result].DueDate.ToString("dd/MM/yyyy")}"); //revisit this, can this be shown by calling the GetDetails method?
+            Console.WriteLine($"{b[result]} Due date: {b[result].DueDate.ToString("dd/MM/yyyy")}");
             break;
+            
         }
         else
         {
@@ -266,7 +276,40 @@ static void CheckOut(int i, List<Book> b)
             break;
         }
     }
+
 }
+
+static void ReturnBook(int i, List<Book> b)
+{
+
+        
+    while (true)
+    {
+        int result = -1;
+        Console.WriteLine("Which book would you like to return? Enter number");
+        while (int.TryParse(Console.ReadLine(), out result) == false)
+        {
+            Console.WriteLine($"Invalid input. Try again with a number 1 = {b.Count}.");
+
+        }
+        result = result - 1;
+        if (b[result].Status == false && result >= 0 && result < b.Count())
+        {
+            b[result].Status = true;
+            b[result].DueDate = DateTime.Now;
+            Console.WriteLine($"{b[result]}"); //revisit this, can this be shown by calling the GetDetails method?
+            break;
+        }
+        //else
+        //{
+        //    Console.WriteLine("This book is already checked out.");
+        //    break;
+        //}
+    }
+}
+//List<Book> checkedOut = new List<Book>();
+//checkedOut.Add(b[result]);//revisit this, can this be shown by calling the GetDetails method?
+//return checkedOut;
 //VALIDATOR METHOD
 //public static int GetPositiveInputInt()
 //{

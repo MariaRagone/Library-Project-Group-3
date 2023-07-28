@@ -30,7 +30,7 @@ namespace Library_Project___Group_3
 		}
 
 		//methods
-		public void GetDetails()
+		public void GetDetails(bool status)
 		{
 			//status false = checked out
 			//status true = on shelf
