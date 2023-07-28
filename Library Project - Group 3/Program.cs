@@ -257,7 +257,7 @@ static void CheckOut(int i, List<Book> b)
         {
             b[result].Status = false;
             b[result].DueDate = DateTime.Now.AddDays(14);
-            Console.WriteLine($"{b[result]} Due date: {b[result].DueDate}"); //revisit this, can this be shown by calling the GetDetails method?
+            Console.WriteLine($"{b[result]} Due date: {b[result].DueDate.ToString("dd/MM/yyyy")}"); //revisit this, can this be shown by calling the GetDetails method?
             break;
         }
         else
