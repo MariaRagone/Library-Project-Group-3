@@ -18,7 +18,7 @@ if (File.Exists(filePath) == false)
 }
 StreamReader reader = new StreamReader(filePath);
 List<Book> searchResults = new List<Book>();
-List<Book> allBooks = new List<Book>();
+List<Book> books = new List<Book>();
 List<Book> checkedOut = new List<Book>();
 while (true)
 {
@@ -37,13 +37,13 @@ while (true)
         //parts[1] = author
         //parts[2] = status
         Book b = new Book(parts[0], (parts[1]), (bool.Parse(parts[2])));
-        allBooks.Add(b);
+        books.Add(b);
     }
 }
 reader.Close();
 DateTime DueDate = DateTime.Now.AddDays(14);
 
-List<Book> books = new List<Book>()
+List<Book> allBooks = new List<Book>()
 {
     new Book("The Great Gatsby", "F. Scott Fitzgerald", true),
     new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", false, DueDate),
@@ -65,21 +65,6 @@ List<Book> books = new List<Book>()
 //-----------------------------------------------------------------------------------
 //puts the list above onto the file
 bool Status = true;
-StreamWriter writer = new StreamWriter(filePath);
-foreach (Book bk in books)
-{
-    if (Status = false)
-    {
-        writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}|{bk.DueDate}");
-
-    }
-    else
-    {
-        writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}");
-
-    }
-}
-writer.Close();
 ///---------------------------------------------------------------------------------
 
 
@@ -136,7 +121,7 @@ writer.Close();
 Console.WriteLine("Welcome to the libary");
 
 bool runProgram = true;
-while (runProgram = true)
+while (runProgram == true)
 {
     Console.WriteLine("Choose an option:");
     Console.WriteLine("1. Display all books");
@@ -158,31 +143,36 @@ while (runProgram = true)
         searchResults = SearchOption(books);
 
         //MAKE THIS A METHOD
-        //---------------------------------------------------
-        Console.WriteLine("Choose an option:");
-        Console.WriteLine("1. Check out");
-        Console.WriteLine("2. Search again");
-        Console.WriteLine("3. Quit");
-        int input2 = int.Parse(Console.ReadLine().Trim().ToLower());
-        if (input2 == 1)
-        {
-            CheckOut(input2, searchResults);
+
+        while (true)
+        { //---------------------------------------------------
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1. Check out");
+            Console.WriteLine("2. Search again");
+            Console.WriteLine("3. Quit");
+            int input2 = int.Parse(Console.ReadLine().Trim().ToLower());
+            if (input2 == 1)
+            {
+                CheckOut(input2, searchResults);
 
 
+            }
+            else if (input2 == 2)
+            {
+                searchResults = SearchOption(books);
+            }
+            else if (input2 == 3)
+            {
+                Console.WriteLine("Goodbye");                
+                runProgram = false;               
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Try again");
+                break;
+            }
+            //---------------------------------------------
         }
-        else if (input2 == 2)
-        {
-            searchResults = SearchOption(books);
-        }
-        else if (input2 == 3)
-        {
-            Console.WriteLine("Goodbye");
-            //continueRun = false;
-            runProgram = false;
-            //Environment.Exit(0);
-        }
-        //---------------------------------------------
-
     }
     else if (input == 2)
     {
@@ -221,6 +211,7 @@ while (runProgram = true)
 
         }
         ReturnBook(input, currentlyCheckedOut);
+
 
     }
     else if (input == 4)
@@ -331,6 +322,22 @@ static void ReturnBook(int i, List<Book> b)
         //}
     }
 }
+
+StreamWriter writer = new StreamWriter(filePath);
+foreach (Book bk in books)
+{
+    if (Status = false)
+    {
+        writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}|{bk.DueDate}");
+
+    }
+    else
+    {
+        writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}");
+
+    }
+}
+writer.Close();
 
 //static List<Book> DisplayCheckoutList(List<Book> searchResults)
 //{
