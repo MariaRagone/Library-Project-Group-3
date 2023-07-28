@@ -7,6 +7,7 @@ using System.Runtime.Intrinsics.X86;
 using Microsoft.VisualBasic;
 using System.Runtime.ConstrainedExecution;
 using System.Collections.Generic;
+using System.Xml;
 
 string filePath = "../../../LibraryDatabase.txt";
 if (File.Exists(filePath) == false)
@@ -112,7 +113,7 @@ writer.Close();
 //if return book ***
 //show the list of books that are checked out (status = checked out) ***
 //which book do you want to return? ***
-//change status and remove due date for selected book **
+//change status and remove due date for selected book ***
 
 
 
@@ -121,17 +122,32 @@ writer.Close();
 //program asks for Name/username, then checked out books are stored in the username List
 
 
+//1.Fix formatting of ‘books’ list
+//2. Revisit menu?
+//3. Save book list to text file
+
+//Forrest  to  Everyone 3:41 PM
+//4.  Fix ‘not found’ loop
+//5. Fix search loop after not found
+//6. Fix “quit loop” after search
+//7. Validate input 2 loop
+
+
 Console.WriteLine("Welcome to the libary");
 
 bool runProgram = true;
 while (runProgram = true)
 {
-
     Console.WriteLine("Choose an option:");
     Console.WriteLine("1. Display all books");
     Console.WriteLine("2. Search for a book");
     Console.WriteLine("3. Return a book");
     Console.WriteLine("4. Quit");
+    //bool continueRun = true;
+    //while (continueRun = true)
+    //{
+
+
 
     int input = int.Parse(Console.ReadLine().Trim().ToLower());
     if (input == 1)
@@ -161,7 +177,9 @@ while (runProgram = true)
         else if (input2 == 3)
         {
             Console.WriteLine("Goodbye");
-            //add a break to the loop
+            //continueRun = false;
+            runProgram = false;
+            //Environment.Exit(0);
         }
         //---------------------------------------------
 
@@ -189,7 +207,7 @@ while (runProgram = true)
         else if (input2 == 3)
         {
             Console.WriteLine("Goodbye");
-            //add a break to the loop
+            runProgram = false;
         }
     }
     else if (input == 3)
@@ -197,7 +215,7 @@ while (runProgram = true)
         List<Book> currentlyCheckedOut = new List<Book>();
         if (books.Any(b => b.Status == false))
         {
-           currentlyCheckedOut = books.Where(b => b.Status == false).ToList();
+            currentlyCheckedOut = books.Where(b => b.Status == false).ToList();
 
             DisplayMenu(currentlyCheckedOut);
 
@@ -213,7 +231,7 @@ while (runProgram = true)
         break;
     }
 
-
+    //}
 }
 
 //methods
@@ -274,7 +292,7 @@ static void CheckOut(int i, List<Book> b)
             b[result].DueDate = DateTime.Now.AddDays(14);
             Console.WriteLine($"{b[result]}");
             break;
-            
+
         }
         else
         {
@@ -288,7 +306,7 @@ static void CheckOut(int i, List<Book> b)
 static void ReturnBook(int i, List<Book> b)
 {
 
-        
+
     while (true)
     {
         int result = -1;
@@ -298,7 +316,7 @@ static void ReturnBook(int i, List<Book> b)
             Console.WriteLine($"Invalid input. Try again with a number 1 = {b.Count}.");
 
         }
-        result = result -1;
+        result = result - 1;
         if (b[result].Status == false && result >= 0 && result < b.Count())
         {
             b[result].Status = true;
