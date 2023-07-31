@@ -22,7 +22,7 @@ List<Book> books = new List<Book>();
 List<Book> checkedOut = new List<Book>();
 while (true)
 {
-    //name|age|grade
+    //Title|Author|Status
     string line = reader.ReadLine();
 
     if (line == null)
@@ -118,7 +118,7 @@ bool Status = true;
 //7. Validate input 2 loop
 
 
-Console.WriteLine("Welcome to the libary");
+Console.WriteLine("Welcome to the Libary of Alexandria");
 
 bool runProgram = true;
 while (runProgram == true)
@@ -128,15 +128,12 @@ while (runProgram == true)
     Console.WriteLine("2. Search for a book");
     Console.WriteLine("3. Return a book");
     Console.WriteLine("4. Quit");
-    //bool continueRun = true;
-    //while (continueRun = true)
-    //{
-
-
+  
 
     int input = int.Parse(Console.ReadLine().Trim().ToLower());
     if (input == 1)
     {
+        Console.Clear();
         //DISPLAY ALL BOOKS
         DisplayMenu(books);
         Console.WriteLine("");
@@ -176,32 +173,42 @@ while (runProgram == true)
     }
     else if (input == 2)
     {
+        Console.Clear();
         searchResults = SearchOption(books);
-
-        Console.WriteLine("Choose an option:");
-        Console.WriteLine("1. Check out");
-        Console.WriteLine("2. Search again");
-        Console.WriteLine("3. Quit");
-        int input2 = int.Parse(Console.ReadLine().Trim().ToLower());
-        if (input2 == 1)
+        while (true)
         {
-            //Make a method for check out process
-            CheckOut(input2, searchResults);
+            Console.WriteLine("");
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1. Check out");
+            Console.WriteLine("2. Search again");
+            Console.WriteLine("3. Quit");
+            int input2 = int.Parse(Console.ReadLine().Trim().ToLower());
+            if (input2 == 1)
+            {
 
+                CheckOut(input2, searchResults);
+                DisplayMenu(searchResults);
 
+            }
+            else if (input2 == 2)
+            {
+                searchResults = SearchOption(books);
+            }
+            else if (input2 == 3)
+            {
+                Console.WriteLine("Goodbye");
+                runProgram = false;
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please try again");
+            }
         }
-        else if (input2 == 2)
-        {
-            searchResults = SearchOption(books);
         }
-        else if (input2 == 3)
-        {
-            Console.WriteLine("Goodbye");
-            runProgram = false;
-        }
-    }
     else if (input == 3)
     {
+        Console.Clear();
         List<Book> currentlyCheckedOut = new List<Book>();
         if (books.Any(b => b.Status == false))
         {
@@ -216,13 +223,16 @@ while (runProgram == true)
     }
     else if (input == 4)
     {
+        Console.Clear();
         Console.WriteLine("Goodbye");
         //list out any books that they have checked out
         runProgram = false;
         break;
     }
-
-    //}
+    else
+    {
+        Console.WriteLine("Invalid input. Please try again");
+    }
 }
 
 //methods
@@ -270,6 +280,7 @@ static void CheckOut(int i, List<Book> b)
     while (true)
     {
         int result = -1;
+        Console.WriteLine("");
         Console.WriteLine("Which book would you like to check out? Enter number");
         while (int.TryParse(Console.ReadLine(), out result) == false)
         {
@@ -277,11 +288,17 @@ static void CheckOut(int i, List<Book> b)
 
         }
         result = result - 1;
-        if (b[result].Status == true && result >= 0 && result < b.Count())
+        if (result < 0 || result >= b.Count())
+        {
+            Console.WriteLine("Number is out of range. Please try again");
+            continue;
+        }
+        if (b[result].Status == true)
         {
             b[result].Status = false;
             b[result].DueDate = DateTime.Now.AddDays(14);
             Console.WriteLine($"{b[result]}");
+            Console.WriteLine("");
             break;
 
         }
@@ -308,18 +325,24 @@ static void ReturnBook(int i, List<Book> b)
 
         }
         result = result - 1;
-        if (b[result].Status == false && result >= 0 && result < b.Count())
+        if (result < 0 || result >= b.Count())
+        {
+            Console.WriteLine("Number is out of range. Please try again");
+            continue;
+        }
+
+            if (b[result].Status == false && result >= 0 && result < b.Count())
         {
             b[result].Status = true;
             b[result].DueDate = DateTime.Now;
-            Console.WriteLine($"{b[result]}"); //revisit this, can this be shown by calling the GetDetails method?
+            Console.WriteLine($"{b[result]}"); 
             break;
         }
-        //else
-        //{
-        //    Console.WriteLine("This book is already checked out.");
-        //    break;
-        //}
+        else
+        {
+            Console.WriteLine($"Invalid input. Try again.");
+            //with a number 1 = {b.Count}.");
+        }
     }
 }
 
@@ -339,148 +362,3 @@ foreach (Book bk in books)
 }
 writer.Close();
 
-//static List<Book> DisplayCheckoutList(List<Book> searchResults)
-//{
-//    if (searchResults.Status == false)
-//    {
-//        foreach (Book b in searchResults)
-//        {
-//            checkedOut.Add(b);
-//        }
-//        return checkedOut;
-//    }
-//}
-//List<Book> checkedOut = new List<Book>();
-//checkedOut.Add(b[result]);//revisit this, can this be shown by calling the GetDetails method?
-//return checkedOut;
-//VALIDATOR METHOD
-//public static int GetPositiveInputInt()
-//{
-//    int result = -1;
-//    while (int.TryParse(Console.ReadLine(), out result) == false || result <= 0)
-//    {
-//        Console.WriteLine("Invalid input. Try again with a positive number.");
-
-//    }
-//    return result;
-//}
-
-//revisit whether to search seperately or not allowing character 
-
-//----------THIS IS EXPERIMENTAL---------------------------
-
-//Console.WriteLine("Search by Author,Title or keyword");
-//string choice = Console.ReadLine().ToLower().Trim();
-
-
-//if (books.Any(b => b.Title.ToLower().Trim().Contains(choice)))
-//{
-//    List<Book> searchList = books.Where(b => b.Title.ToLower().Trim().Contains(choice)).ToList();
-
-//    DisplayMenu(searchList);
-
-//}
-
-//else if (books.Any(b => b.Author.ToLower().Trim().Contains(choice)))
-//{
-//    List<Book> searchList = books.Where(b => b.Author.ToLower().Trim().Contains(choice)).ToList();
-
-//    DisplayMenu(searchList);
-
-//}
-//else
-//{
-//    Console.WriteLine("Not found.");
-
-//}
-
-//Console.WriteLine("");
-//string checkOut = Console.ReadLine().Trim().ToLower();
-
-
-
-
-
-//looping
-
-
-//    int menuChoice = -1;
-//while (menuChoice <= -1 || menuChoice >= Allcar.Count + 3)
-//{
-//    Console.WriteLine($"Choose a menu option. 1-{Allcar.Count + 2}");
-//    while (int.TryParse(Console.ReadLine(), out menuChoice) == false)
-//    {
-//        Console.WriteLine("incorrect format");
-//    }
-//}
-
-// original search option//Console.WriteLine("Search by Author,Title or keyword");
-//string choice = Console.ReadLine().ToLower().Trim();
-
-//if (books.Any(b => b.Title.ToLower().Trim().Contains(choice)))
-//{
-//    List<Book> searchList = books.Where(b => b.Title.ToLower().Trim().Contains(choice)).ToList();
-
-//    DisplayMenu(searchList);
-
-//}
-
-//else if (books.Any(b => b.Author.ToLower().Trim().Contains(choice)))
-//{
-//    List<Book> searchList = books.Where(b => b.Author.ToLower().Trim().Contains(choice)).ToList();
-
-//    DisplayMenu(searchList);
-
-//}
-//else
-//{
-//    Console.WriteLine("Not found.");
-
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    menuChoice
-
-
-
-
-//    //LOGIC for buying Car
-//    if (checkOut == "y")
-//    {
-//        books.Remove(choice);
-//        Console.WriteLine("Our finance team will reach out to you shortly.");
-//    }
-
-//    else
-//    {
-//        Console.WriteLine("Feel free to keep browsing.");
-
-//    }
-//    }
-
-
-
-
-//Console.WriteLine($"{bookList.Count + 1} Check out");
-//Console.WriteLine($"{bookList.Count + 2} Search again");
-//Console.WriteLine($"{bookList.Count + 3} Quit");
-
-//bool runProgram = true;
-//while (runProgram)
-//{
-//    GetDetails(allBooks);
-//}

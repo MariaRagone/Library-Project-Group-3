@@ -18,7 +18,7 @@ namespace Library_Project___Group_3
 			Title = _title;
 			Author = _author;
 			Status = _status;
-			DueDate = DateTime.Now;
+			DueDate = DateTime.Now.AddDays(14);
 		}
 		//overload
 		public Book(string _title, string _author, bool _status, DateTime _dueDate)

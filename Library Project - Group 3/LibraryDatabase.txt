@@ -1,12 +1,12 @@
 The Great Gatsby|F. Scott Fitzgerald|True
 Harry Potter and the Sorcerer's Stone|J.K. Rowling|False
-To Kill a Mockingbird|Harper Lee|True
-The Hobbit|J.R.R. Tolkein|False
+To Kill a Mockingbird|Harper Lee|False
+The Hobbit|J.R.R. Tolkein|True
 1984|George Orwell|True
 Siddhartha|Herman Hesse|True
 For Whom the Bell Tolls|Ernest Hemingway|False
 The Stand|Stephen King|True
-The Lord of the Rings|J.R.R. Tolkein|True
+The Lord of the Rings|J.R.R. Tolkein|False
 The Old Man and the Sea|Ernest Hemingway|False
 The Shining|Stephen King|True
 Bossypants|Tina Fey|False
@@ -29,3 +29,8 @@ Matilda|Roald Dahl|True
 Winnie-the-Pooh|A.A. Milne|True
 The Cat in the Hat|Dr. Seuss|True
 Brown Bear, Brown Bear, What Do You See?|Bill Martin Jr., illustrated by Eric Carle|True
+Harry Potter and the Chamber of Secrets|J.K. Rowling|False
+Harry Potter and the Prisoner of Azkaban|J.K. Rowling|False
+Harry Potter and the Goblet of Fire|J.K. Rowling|True
+Harry Potter and the Order of the Phoenix|J.K. Rowling|True
+Harry Potter and the Half Blood Price|J.K. Rowling|True
