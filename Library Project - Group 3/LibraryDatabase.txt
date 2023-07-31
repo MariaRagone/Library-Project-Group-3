@@ -28,7 +28,7 @@ The Very Hungry Caterpillar|by Eric Carle|True
 Matilda|Roald Dahl|True
 Winnie-the-Pooh|A.A. Milne|True
 The Cat in the Hat|Dr. Seuss|True
-Brown Bear, Brown Bear, What Do You See?|Bill Martin Jr., illustrated by Eric Carle|True
+Brown Bear, Brown Bear, What Do You See?|Bill Martin Jr.|True
 Harry Potter and the Chamber of Secrets|J.K. Rowling|False
 Harry Potter and the Prisoner of Azkaban|J.K. Rowling|False
 Harry Potter and the Goblet of Fire|J.K. Rowling|True

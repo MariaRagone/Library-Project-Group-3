@@ -53,11 +53,13 @@ namespace Library_Project___Group_3
         {
 			if (Status == false)
 			{
-				return String.Format("{0,-39} by: {1, -30} Availability: {2, -15} due by: {3, 10}", Title, Author, "Checked Out", DueDate.ToString("MM/dd/yyyy"));
+
+                return String.Format("{0,-50} {1, -30} {2, -15} {3, 10}", Title, Author, "Checked Out", DueDate.ToString("MM/dd/yyyy"));
 			}
 			else 
 			{
-				return String.Format("{0,-39} by: {1, -30} Availability: {2, -15}", Title, Author, "On shelf");
+
+                return String.Format("{0,-50} {1, -30} {2, -15}", Title, Author, "On shelf");
 			}
         }
     }

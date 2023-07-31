@@ -20,6 +20,8 @@ StreamReader reader = new StreamReader(filePath);
 List<Book> searchResults = new List<Book>();
 List<Book> books = new List<Book>();
 List<Book> checkedOut = new List<Book>();
+List<Book> currentlyCheckedOut = new List<Book>();
+
 while (true)
 {
     //Title|Author|Status
@@ -128,7 +130,7 @@ while (runProgram == true)
     Console.WriteLine("2. Search for a book");
     Console.WriteLine("3. Return a book");
     Console.WriteLine("4. Quit");
-  
+
 
     int input = int.Parse(Console.ReadLine().Trim().ToLower());
     if (input == 1)
@@ -160,8 +162,9 @@ while (runProgram == true)
             }
             else if (input2 == 3)
             {
-                Console.WriteLine("Goodbye");                
-                runProgram = false;               
+                Console.WriteLine("Goodbye. You have burned down the Library of Alexandria and set human civilization back by a few hundred years!");
+                BurnLibrary();
+                runProgram = false;
             }
             else
             {
@@ -187,29 +190,45 @@ while (runProgram == true)
             {
 
                 CheckOut(input2, searchResults);
+                Console.WriteLine();
+                Console.WriteLine("SEARCH RESULTS");
+
                 DisplayMenu(searchResults);
 
             }
             else if (input2 == 2)
             {
+
                 searchResults = SearchOption(books);
+
             }
             else if (input2 == 3)
             {
-                Console.WriteLine("Goodbye");
+                Console.Clear();
+                Console.WriteLine("Goodbye. You have burned down the Library of Alexandria and set human civilization back by a few hundred years!");
+                BurnLibrary();
+
+                Console.WriteLine();
+                Console.WriteLine("Here is the list of books that are checked out. I guess you get to keep them since the library is in flames. You will now be the smartest person who ever existed!");
+                Console.WriteLine();
+                Console.WriteLine();
+
+                currentlyCheckedOut = books.Where(b => b.Status == false).ToList();
+                DisplayMenu(currentlyCheckedOut);
+
                 runProgram = false;
-                break;
+                Environment.Exit(0);
             }
             else
             {
                 Console.WriteLine("Invalid input. Please try again");
             }
         }
-        }
+    }
     else if (input == 3)
     {
         Console.Clear();
-        List<Book> currentlyCheckedOut = new List<Book>();
+        //List<Book> currentlyCheckedOut = new List<Book>();
         if (books.Any(b => b.Status == false))
         {
             currentlyCheckedOut = books.Where(b => b.Status == false).ToList();
@@ -224,7 +243,8 @@ while (runProgram == true)
     else if (input == 4)
     {
         Console.Clear();
-        Console.WriteLine("Goodbye");
+        Console.WriteLine("Goodbye. You have burned down the Library of Alexandria and set human civilization back by a few hundred years!");
+        BurnLibrary();
         //list out any books that they have checked out
         runProgram = false;
         break;
@@ -238,9 +258,13 @@ while (runProgram == true)
 //methods
 static void DisplayMenu(List<Book> bookList)
 {
+    Console.WriteLine(String.Format("{0,-54} {1, -20} {2, 16} {3, 17}", "Title", "Author", "Status", "Due Date"));
+    Console.WriteLine("-----------------------------------------------------------------------------------------------------------------");
+
+
     for (int i = 0; i < bookList.Count; i++)
     {
-        Console.WriteLine($"{i + 1}. {bookList[i]}");
+        Console.WriteLine(String.Format("{0,3}.", i + 1) + bookList[i]);
 
     }
 
@@ -248,30 +272,38 @@ static void DisplayMenu(List<Book> bookList)
 
 static List<Book> SearchOption(List<Book> bk)
 {
-    Console.WriteLine("Search by Author,Title or keyword");
-    string choice = Console.ReadLine().ToLower().Trim();
-    List<Book> searchList = new List<Book>();
-    if (bk.Any(b => b.Title.ToLower().Trim().Contains(choice)))
+    while (true)
     {
-        searchList = bk.Where(b => b.Title.ToLower().Trim().Contains(choice)).ToList();
 
-        DisplayMenu(searchList);
+        Console.WriteLine("Search by Author,Title or keyword");
+        string choice = Console.ReadLine().ToLower().Trim();
+        List<Book> searchList = new List<Book>();
+        if (bk.Any(b => b.Title.ToLower().Trim().Contains(choice)))
+        {
+            searchList = bk.Where(b => b.Title.ToLower().Trim().Contains(choice)).ToList();
+            Console.WriteLine();
+            Console.WriteLine("SEARCH RESULTS");
+            DisplayMenu(searchList);
+            return searchList;
 
+        }
+
+        else if (bk.Any(b => b.Author.ToLower().Trim().Contains(choice)))
+        {
+            searchList = bk.Where(b => b.Author.ToLower().Trim().Contains(choice)).ToList();
+            Console.WriteLine();
+            Console.WriteLine("SEARCH RESULTS");
+            DisplayMenu(searchList);
+            return searchList;
+
+        }
+        else
+        {
+            Console.WriteLine("Not found.");
+            continue;
+
+        }
     }
-
-    else if (bk.Any(b => b.Author.ToLower().Trim().Contains(choice)))
-    {
-        searchList = bk.Where(b => b.Author.ToLower().Trim().Contains(choice)).ToList();
-
-        DisplayMenu(searchList);
-
-    }
-    else
-    {
-        Console.WriteLine("Not found.");
-
-    }
-    return searchList;
 }
 
 static void CheckOut(int i, List<Book> b)
@@ -297,8 +329,13 @@ static void CheckOut(int i, List<Book> b)
         {
             b[result].Status = false;
             b[result].DueDate = DateTime.Now.AddDays(14);
+            Console.WriteLine();
+            Console.Clear();
+
+            Console.WriteLine("YOU HAVE CHECKED OUT:");
             Console.WriteLine($"{b[result]}");
             Console.WriteLine("");
+
             break;
 
         }
@@ -331,11 +368,11 @@ static void ReturnBook(int i, List<Book> b)
             continue;
         }
 
-            if (b[result].Status == false && result >= 0 && result < b.Count())
+        if (b[result].Status == false && result >= 0 && result < b.Count())
         {
             b[result].Status = true;
             b[result].DueDate = DateTime.Now;
-            Console.WriteLine($"{b[result]}"); 
+            Console.WriteLine($"{b[result]}");
             break;
         }
         else
@@ -344,6 +381,38 @@ static void ReturnBook(int i, List<Book> b)
             //with a number 1 = {b.Count}.");
         }
     }
+}
+
+
+static void BurnLibrary()
+{
+
+
+    string burn = @"|     |
+                                \\_V_//
+                                \/=|=\/
+                                 [=v=]
+                               __\___/_____
+                              /..[  _____  ]
+                             /_  [ [  M /] ]
+                            /../.[ [ M /@] ]
+                           <-->[_[ [M /@/] ]
+                          /../ [.[ [ /@/ ] ]
+     _________________]\ /__/  [_[ [/@/ C] ]
+    <_________________>>0---]  [=\ \@/ C / /
+       ___      ___   ]/000o   /__\ \ C / /
+          \    /              /....\ \_/ /
+       ....\||/....           [___/=\___/
+      .    .  .    .          [...] [...]
+     .      ..      .         [___/ \___]
+     .    0 .. 0    .         <---> <--->
+  /\/\.    .  .    ./\/\      [..]   [..]
+ / / / .../|  |\... \ \ \    _[__]   [__]_
+/ / /       \/       \ \ \  [____>   <____]
+";
+    Console.WriteLine(burn);
+
+
 }
 
 StreamWriter writer = new StreamWriter(filePath);
