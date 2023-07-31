@@ -106,7 +106,6 @@ string nameCapital = char.ToUpper(name[0]) + name.Substring(1);
 bool runProgram = true;
 while (runProgram == true)
 {
-    Console.Clear();
     Console.WriteLine($"{nameCapital}, choose an option:");
     Console.WriteLine("1. Display all books");
     Console.WriteLine("2. Search for a book");
@@ -156,14 +155,12 @@ while (runProgram == true)
             else
             {
                 Console.WriteLine("Invalid input. Try again");
-                break;
             }
         }
     }
     //Search for books
     else if (input == 2)
     {
-        Console.Clear();
         searchResults = SearchOption(books);
         while (true)
         {
@@ -206,7 +203,7 @@ while (runProgram == true)
             else
             {
                 Console.WriteLine("Invalid input. Please try again");
-                continue;
+                
             }
         }
     }
