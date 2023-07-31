@@ -105,20 +105,21 @@ bool Status = true;
 
 
 //EXTRA IDEAS
-//console clear
-//program asks for Name/username, then checked out books are stored in the username List
+//console clear***
+//program asks for Name/username, then checked out books are stored in the username List**
 
 
-//1.Fix formatting of ‘books’ list
+//1.Fix formatting of ‘books’ list***
 //2. Revisit menu?
-//3. Save book list to text file
+//3. Save book list to text file ***
 
 //Forrest  to  Everyone 3:41 PM
-//4.  Fix ‘not found’ loop
-//5. Fix search loop after not found
-//6. Fix “quit loop” after search
-//7. Validate input 2 loop
+//4.  Fix ‘not found’ loop ***
+//5. Fix search loop after not found ***
+//6. Fix “quit loop” after search ***
+//7. Validate input 2 loop***
 
+currentlyCheckedOut = books.Where(b => b.Status == false).ToList();
 
 Console.WriteLine("Welcome to the Libary of Alexandria");
 string library = @" _________________________________________________________
@@ -152,7 +153,7 @@ string nameCapital = char.ToUpper(name[0]) + name.Substring(1);
 bool runProgram = true;
 while (runProgram == true)
 {
-    Console.WriteLine();
+    Console.Clear();
     Console.WriteLine($"{nameCapital}, choose an option:");
     Console.WriteLine("1. Display all books");
     Console.WriteLine("2. Search for a book");
@@ -181,7 +182,7 @@ while (runProgram == true)
             int input2 = int.Parse(Console.ReadLine().Trim().ToLower());
             if (input2 == 1)
             {
-                CheckOut(nameCapital, input2, searchResults);
+                CheckOut(nameCapital, input2, searchResults, checkedOut);
 
 
             }
@@ -191,15 +192,7 @@ while (runProgram == true)
             }
             else if (input2 == 3)
             {
-                Console.WriteLine("Here is the list of books that are checked out. I guess you get to keep them since the library is in flames. You will now be the smartest person who ever existed!");
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine();
-
-                currentlyCheckedOut = books.Where(b => b.Status == false).ToList();
-                DisplayMenu(currentlyCheckedOut);
-                Console.WriteLine($"Goodbye {nameCapital}. You have burned down the Library of Alexandria and set human civilization back by a few hundred years!");
-                BurnLibrary(); 
+                BurnLibrary(nameCapital, checkedOut); 
                 runProgram = false;
             }
             else
@@ -225,7 +218,7 @@ while (runProgram == true)
             if (input2 == 1)
             {
 
-                CheckOut(nameCapital, input2, searchResults);
+                CheckOut(nameCapital, input2, searchResults, checkedOut);
                 Console.WriteLine();
                 Console.WriteLine("SEARCH RESULTS");
 
@@ -241,16 +234,7 @@ while (runProgram == true)
             else if (input2 == 3)
             {
                 Console.Clear();
-
-                Console.WriteLine("Here is the list of books that are checked out. I guess you get to keep them since the library is in flames. You will now be the smartest person who ever existed!");
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine();
-
-                currentlyCheckedOut = books.Where(b => b.Status == false).ToList();
-                DisplayMenu(currentlyCheckedOut);
-                Console.WriteLine($"Goodbye {nameCapital}. You have burned down the Library of Alexandria and set human civilization back by a few hundred years!");
-                BurnLibrary();
+                BurnLibrary(nameCapital, checkedOut);
 
                 runProgram = false;
                 Environment.Exit(0);
@@ -265,7 +249,6 @@ while (runProgram == true)
     else if (input == 3)
     {
         Console.Clear();
-        //List<Book> currentlyCheckedOut = new List<Book>();
         if (books.Any(b => b.Status == false))
         {
             currentlyCheckedOut = books.Where(b => b.Status == false).ToList();
@@ -280,9 +263,7 @@ while (runProgram == true)
     else if (input == 4)
     {
         Console.Clear();
-        Console.WriteLine($"Goodbye {nameCapital}. You have burned down the Library of Alexandria and set human civilization back by a few hundred years!");
-        BurnLibrary();
-        //list out any books that they have checked out
+        BurnLibrary(nameCapital, checkedOut);
         runProgram = false;
         break;
     }
@@ -344,7 +325,7 @@ static List<Book> SearchOption(List<Book> bk)
     }
 }
 
-static void CheckOut(string s, int i, List<Book> b)
+static void CheckOut(string s, int i, List<Book> b, List<Book> bk)
 {
 
     while (true)
@@ -367,6 +348,7 @@ static void CheckOut(string s, int i, List<Book> b)
         {
             b[result].Status = false;
             b[result].DueDate = DateTime.Now.AddDays(14);
+            bk.Add(b[result]);
             Console.WriteLine();
             Console.Clear();
 
@@ -415,27 +397,14 @@ static void ReturnBook(string s, int i, List<Book> b)
         }
         else
         {
-            Console.WriteLine($"Invalid input. Try again.");
-            //with a number 1 = {b.Count}.");
+            Console.WriteLine("Invalid input. Try again.");
         }
     }
 }
-//static void CreateCheckoutList(List<Book> currentlyCheckedOut)
-//{
-
-//}
-
 
 static void BurnLibrary(string s, List<Book> b)
 {
-    Console.WriteLine("Here is the list of books that are checked out. I guess you get to keep them since the library is in flames. You will now be the smartest person who ever existed!");
-    Console.WriteLine();
-    Console.WriteLine();
-    Console.WriteLine();
-
-    b = books.Where(b => b.Status == false).ToList();
-    DisplayMenu(b);
-    Console.WriteLine($"Goodbye {s}. You have burned down the Library of Alexandria and set human civilization back by a few hundred years!");
+   
 
     string burn = @"|     |
                                 \\_V_//
@@ -459,6 +428,15 @@ static void BurnLibrary(string s, List<Book> b)
  / / / .../|  |\... \ \ \    _[__]   [__]_
 / / /       \/       \ \ \  [____>   <____]
 ";
+    List<Book> checkedOutFinal = new List<Book>();
+    Console.WriteLine("Here is the list of books that you checked out. I guess you get to keep them since the library is in flames. You will now be the smartest person who ever existed!");
+    Console.WriteLine();
+    Console.WriteLine();
+    Console.WriteLine();
+
+    checkedOutFinal = b.Where(b => b.Status == false).ToList();
+    DisplayMenu(checkedOutFinal);
+    Console.WriteLine($"Goodbye {s}. You have burned down the Library of Alexandria and set human civilization back by a few hundred years!");
     Console.WriteLine(burn);
 
     Environment.Exit(0);
