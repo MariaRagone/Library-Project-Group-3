@@ -9,6 +9,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Collections.Generic;
 using System.Xml;
 
+//Creating file
 string filePath = "../../../LibraryDatabase.txt";
 if (File.Exists(filePath) == false)
 {
@@ -45,80 +46,31 @@ while (true)
 reader.Close();
 DateTime DueDate = DateTime.Now.AddDays(14);
 
-List<Book> allBooks = new List<Book>()
-{
-    new Book("The Great Gatsby", "F. Scott Fitzgerald", true),
-    new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", false, DueDate),
-    new Book("To Kill a Mockingbird","Harper Lee", true),
-    new Book("The Hobbit", "J.R.R. Tolkein", false, DueDate),
-    new Book("1984", "George Orwell", true),
-    new Book("Siddhartha", "Herman Hesse", true),
-    new Book("For Whom the Bell Tolls", "Ernest Hemingway", false, DueDate),
-    new Book("The Stand", "Stephen King", true),
-    new Book("The Lord of the Rings", "J.R.R. Tolkein", true),
-    new Book("The Old Man and the Sea", "Ernest Hemingway", false, DueDate),
-    new Book("The Shining", "Stephen King", true),
-    new Book("Bossypants", "Tina Fey", false, DueDate),
-    new Book("Me Talk Pretty One Day", "David Sedaris", true),
-    new Book("Where'd You Go, Bernadette", "Maria Semple", true),
-    new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", true)
+//List<Book> allBooks = new List<Book>()
+//{
+//    new Book("The Great Gatsby", "F. Scott Fitzgerald", true),
+//    new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", false, DueDate),
+//    new Book("To Kill a Mockingbird","Harper Lee", true),
+//    new Book("The Hobbit", "J.R.R. Tolkein", false, DueDate),
+//    new Book("1984", "George Orwell", true),
+//    new Book("Siddhartha", "Herman Hesse", true),
+//    new Book("For Whom the Bell Tolls", "Ernest Hemingway", false, DueDate),
+//    new Book("The Stand", "Stephen King", true),
+//    new Book("The Lord of the Rings", "J.R.R. Tolkein", true),
+//    new Book("The Old Man and the Sea", "Ernest Hemingway", false, DueDate),
+//    new Book("The Shining", "Stephen King", true),
+//    new Book("Bossypants", "Tina Fey", false, DueDate),
+//    new Book("Me Talk Pretty One Day", "David Sedaris", true),
+//    new Book("Where'd You Go, Bernadette", "Maria Semple", true),
+//    new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", true)
 
-};
+//};
 //-----------------------------------------------------------------------------------
 //puts the list above onto the file
 bool Status = true;
 ///---------------------------------------------------------------------------------
 
-
-////PSEUDOCODE
-//start program and display menu options ***
-//Chose to display all books or search, or retrun book, or quit *** 
-//if display all books as numbered list ***
-//show the entire list of books ***
-//search by author, title, keyword ***
-//if search ***
-//prompt the user to search by author, title, or keyword ***
-//display the searchlist that matches search term - list is numbered ***
-//at the end of the list there is extra numbers for checkout, search again, see entire list, quit ***
-//if checkout ***
-//change status and due date for selected book ***
-
-
-// do you want to search again? Loops back to the beginning ***
-//if search again ***
-//loop the "search" if statement above ***
-//if display entire list ***
-//search by author, title, keyword ***
-
-//quit the program ***
-//if quit ***
-
-
-
-
-//add checked out books to a receipt List
-//if return book ***
-//show the list of books that are checked out (status = checked out) ***
-//which book do you want to return? ***
-//change status and remove due date for selected book ***
-
-
-
-//EXTRA IDEAS
-//console clear***
-//program asks for Name/username, then checked out books are stored in the username List**
-
-
-//1.Fix formatting of ‘books’ list***
-//2. Revisit menu?
-//3. Save book list to text file ***
-
-//Forrest  to  Everyone 3:41 PM
-//4.  Fix ‘not found’ loop ***
-//5. Fix search loop after not found ***
-//6. Fix “quit loop” after search ***
-//7. Validate input 2 loop***
-
+//Starting program
 currentlyCheckedOut = books.Where(b => b.Status == false).ToList();
 
 Console.WriteLine("Welcome to the Libary of Alexandria");
@@ -150,6 +102,7 @@ Console.WriteLine("Please enter your name.");
 string name = Console.ReadLine().ToLower().Trim();
 string nameCapital = char.ToUpper(name[0]) + name.Substring(1);
 
+//Choose an option after getting username
 bool runProgram = true;
 while (runProgram == true)
 {
@@ -161,7 +114,9 @@ while (runProgram == true)
     Console.WriteLine("4. Quit");
 
 
-    int input = int.Parse(Console.ReadLine().Trim().ToLower());
+    int input = 0;
+    while (int.TryParse(Console.ReadLine().Trim().ToLower(), out input) == false)
+    { Console.WriteLine("Invalid input. Only use whole numbers"); }
     if (input == 1)
     {
         Console.Clear();
@@ -170,39 +125,42 @@ while (runProgram == true)
         Console.WriteLine("");
         searchResults = SearchOption(books);
 
-        //MAKE THIS A METHOD
-
+        //Choose an option after displaying books
         while (true)
-        { //---------------------------------------------------
+        { 
             Console.WriteLine(); 
             Console.WriteLine($"{nameCapital}, choose an option:");
             Console.WriteLine("1. Check out");
             Console.WriteLine("2. Search again");
             Console.WriteLine("3. Quit");
-            int input2 = int.Parse(Console.ReadLine().Trim().ToLower());
+            int input2 = 0;
+            while (int.TryParse(Console.ReadLine().Trim().ToLower(), out input2) == false)
+            { Console.WriteLine("Invalid input. Only use whole numbers"); }
             if (input2 == 1)
             {
                 CheckOut(nameCapital, input2, searchResults, checkedOut);
-
-
             }
+            //Search for a book
             else if (input2 == 2)
             {
                 searchResults = SearchOption(books);
             }
+            //quit & burn down the library
             else if (input2 == 3)
             {
                 BurnLibrary(nameCapital, checkedOut); 
                 runProgram = false;
             }
+
+            //Invalid input
             else
             {
                 Console.WriteLine("Invalid input. Try again");
                 break;
             }
-            //---------------------------------------------
         }
     }
+    //Search for books
     else if (input == 2)
     {
         Console.Clear();
@@ -214,7 +172,10 @@ while (runProgram == true)
             Console.WriteLine("1. Check out");
             Console.WriteLine("2. Search again");
             Console.WriteLine("3. Quit");
-            int input2 = int.Parse(Console.ReadLine().Trim().ToLower());
+            int input2 = 0;
+            while (int.TryParse(Console.ReadLine().Trim().ToLower(), out input2) == false)
+            { Console.WriteLine("Invalid input. Only use whole numbers"); }
+            //Check out books
             if (input2 == 1)
             {
 
@@ -225,12 +186,14 @@ while (runProgram == true)
                 DisplayMenu(searchResults);
 
             }
+            //Search for books
             else if (input2 == 2)
             {
 
                 searchResults = SearchOption(books);
 
             }
+            //quit and burn down the library
             else if (input2 == 3)
             {
                 Console.Clear();
@@ -243,9 +206,12 @@ while (runProgram == true)
             else
             {
                 Console.WriteLine("Invalid input. Please try again");
+                continue;
             }
         }
     }
+        
+    //return books
     else if (input == 3)
     {
         Console.Clear();
@@ -260,6 +226,7 @@ while (runProgram == true)
 
 
     }
+    //quit and burn down the library
     else if (input == 4)
     {
         Console.Clear();
@@ -460,3 +427,51 @@ foreach (Book bk in books)
 }
 writer.Close();
 
+////PSEUDOCODE
+//start program and display menu options ***
+//Chose to display all books or search, or retrun book, or quit *** 
+//if display all books as numbered list ***
+//show the entire list of books ***
+//search by author, title, keyword ***
+//if search ***
+//prompt the user to search by author, title, or keyword ***
+//display the searchlist that matches search term - list is numbered ***
+//at the end of the list there is extra numbers for checkout, search again, see entire list, quit ***
+//if checkout ***
+//change status and due date for selected book ***
+
+
+// do you want to search again? Loops back to the beginning ***
+//if search again ***
+//loop the "search" if statement above ***
+//if display entire list ***
+//search by author, title, keyword ***
+
+//quit the program ***
+//if quit ***
+
+
+
+
+//add checked out books to a receipt List
+//if return book ***
+//show the list of books that are checked out (status = checked out) ***
+//which book do you want to return? ***
+//change status and remove due date for selected book ***
+
+
+
+//EXTRA IDEAS
+//console clear***
+//program asks for Name/username, then checked out books are stored in the username List**
+
+
+//1.Fix formatting of ‘books’ list***
+//2. Revisit menu?
+//3. Save book list to text file ***
+
+//Forrest  to  Everyone 3:41 PM
+//4.  Fix ‘not found’ loop ***
+//5. Fix search loop after not found ***
+//6. Fix “quit loop” after search ***
+//7. Validate input 2 loop***
