@@ -66,7 +66,7 @@ DateTime DueDate = DateTime.Now.AddDays(14);
 
 //};
 //-----------------------------------------------------------------------------------
-//puts the list above onto the file
+
 bool Status = true;
 ///---------------------------------------------------------------------------------
 
@@ -147,8 +147,9 @@ while (runProgram == true)
             //quit & burn down the library
             else if (input2 == 3)
             {
-                BurnLibrary(nameCapital, checkedOut); 
-                runProgram = false;
+                break;
+                //BurnLibrary(nameCapital, checkedOut); 
+                //runProgram = false;
             }
 
             //Invalid input
@@ -161,6 +162,8 @@ while (runProgram == true)
     //Search for books
     else if (input == 2)
     {
+        Console.Clear();
+
         searchResults = SearchOption(books);
         while (true)
         {
@@ -194,10 +197,10 @@ while (runProgram == true)
             else if (input2 == 3)
             {
                 Console.Clear();
-                BurnLibrary(nameCapital, checkedOut);
+                //BurnLibrary(nameCapital, checkedOut);
 
-                runProgram = false;
-                Environment.Exit(0);
+                //runProgram = false;
+                //Environment.Exit(0);
                 break;
             }
             else
@@ -228,6 +231,26 @@ while (runProgram == true)
     {
         Console.Clear();
         BurnLibrary(nameCapital, checkedOut);
+
+        StreamWriter writer = new StreamWriter(filePath);
+        foreach (Book bk in books)
+        {
+            if (bk.Status == false)
+            {
+                writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}|{bk.DueDate}");
+
+            }
+            else
+            {
+                writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}");
+
+            }
+        }
+        writer.Close();
+
+
+
+
         runProgram = false;
         break;
     }
@@ -258,7 +281,7 @@ static List<Book> SearchOption(List<Book> bk)
     while (true)
     {
 
-        Console.WriteLine("Search by Author,Title or keyword");
+        Console.WriteLine("Search by Author or Title Keyword");
         string choice = Console.ReadLine().ToLower().Trim();
         List<Book> searchList = new List<Book>();
         if (bk.Any(b => b.Title.ToLower().Trim().Contains(choice)))
@@ -299,7 +322,7 @@ static void CheckOut(string s, int i, List<Book> b, List<Book> bk)
         Console.WriteLine($"{s}, which book would you like to check out? Enter number");
         while (int.TryParse(Console.ReadLine(), out result) == false)
         {
-            Console.WriteLine($"Invalid input. Try again with a number 1 = {b.Count}.");
+            Console.WriteLine($"Invalid input. Please try again.");
 
         }
         result = result - 1;
@@ -326,7 +349,6 @@ static void CheckOut(string s, int i, List<Book> b, List<Book> bk)
         else
         {
             Console.WriteLine("This book is already checked out.");
-            break;
         }
     }
 
@@ -339,6 +361,7 @@ static void ReturnBook(string s, int i, List<Book> b)
     while (true)
     {
         int result = -1;
+        Console.WriteLine();
         Console.WriteLine($"{s}, which book would you like to return? Enter number");
         while (int.TryParse(Console.ReadLine(), out result) == false)
         {
@@ -396,14 +419,13 @@ static void BurnLibrary(string s, List<Book> b)
           | ;  :|     
  _____.,-#%&$@%#&#~,._____
 ";
-
+    Console.ForegroundColor = ConsoleColor.Red;
     Console.WriteLine(burn);
     if (b.Count <= 0)
     {
         Console.WriteLine();
         Console.WriteLine("Thanks for nothing!");
         Console.WriteLine();
-        Environment.Exit(0);
 
     }
     else
@@ -420,27 +442,8 @@ static void BurnLibrary(string s, List<Book> b)
         DisplayMenu(checkedOutFinal);
     }
 
-    Environment.Exit(0);
-
-
 
 }
-
-StreamWriter writer = new StreamWriter(filePath);
-foreach (Book bk in books)
-{
-    if (Status = false)
-    {
-        writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}|{bk.DueDate}");
-
-    }
-    else
-    {
-        writer.WriteLine($"{bk.Title}|{bk.Author}|{bk.Status}");
-
-    }
-}
-writer.Close();
 
 ////PSEUDOCODE
 //start program and display menu options ***
