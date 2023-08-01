@@ -131,7 +131,7 @@ while (runProgram == true)
             Console.WriteLine($"{nameCapital}, choose an option:");
             Console.WriteLine("1. Check out");
             Console.WriteLine("2. Search again");
-            Console.WriteLine("3. Quit");
+            Console.WriteLine("3. Return to main menu");
             int input2 = 0;
             while (int.TryParse(Console.ReadLine().Trim().ToLower(), out input2) == false)
             { Console.WriteLine("Invalid input. Only use whole numbers"); }
@@ -171,7 +171,7 @@ while (runProgram == true)
             Console.WriteLine($"{nameCapital}, choose an option:");
             Console.WriteLine("1. Check out");
             Console.WriteLine("2. Search again");
-            Console.WriteLine("3. Quit");
+            Console.WriteLine("3. Return to main menu");
             int input2 = 0;
             while (int.TryParse(Console.ReadLine().Trim().ToLower(), out input2) == false)
             { Console.WriteLine("Invalid input. Only use whole numbers"); }
@@ -349,6 +349,7 @@ static void CheckOut(string s, int i, List<Book> b, List<Book> bk)
         else
         {
             Console.WriteLine("This book is already checked out.");
+            break;
         }
     }
 
