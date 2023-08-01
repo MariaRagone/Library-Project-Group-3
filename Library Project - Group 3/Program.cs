@@ -368,10 +368,12 @@ static void ReturnBook(string s, int i, List<Book> b)
 
 static void BurnLibrary(string s, List<Book> b)
 {
-   
+    Console.Clear();
+    Console.WriteLine($"Goodbye {s}. You have burned down the Library of Alexandria and set human civilization back by a few hundred years!");
 
-    string burn = @"|     |
-                                \\_V_//
+    string burn = @"     
+                                __^^^__
+                                //_V_\\
                                 \/=|=\/
                                  [=v=]
                                __\___/_____
@@ -382,28 +384,44 @@ static void BurnLibrary(string s, List<Book> b)
                           /../ [.[ [ /@/ ] ]
      _________________]\ /__/  [_[ [/@/ C] ]
     <_________________>>0---]  [=\ \@/ C / /
-       ___      ___   ]/000o   /__\ \ C / /
-          \    /              /....\ \_/ /
-       ....\||/....           [___/=\___/
-      .    .  .    .          [...] [...]
-     .      ..      .         [___/ \___]
-     .    0 .. 0    .         <---> <--->
-  /\/\.    .  .    ./\/\      [..]   [..]
- / / / .../|  |\... \ \ \    _[__]   [__]_
-/ / /       \/       \ \ \  [____>   <____]
+       _.-^^---....,,--  ]/000 /__\ \ C / /
+ _--                  --_      /....\ \_/ /
+<                        >)    [___/=\___/
+|                         |    [...] [...]
+ \._                   _./     [___/ \___]
+    ```--. . , ; .--'''        <---> <---> 
+          | |   |              [..]   [..]
+       .-=||  | |=-.          _[__]   [__]_
+       `-=#$%&%$#=-'        [____>   <____]
+          | ;  :|     
+ _____.,-#%&$@%#&#~,._____
 ";
-    List<Book> checkedOutFinal = new List<Book>();
-    Console.WriteLine("Here is the list of books that you checked out. I guess you get to keep them since the library is in flames. You will now be the smartest person who ever existed!");
-    Console.WriteLine();
-    Console.WriteLine();
-    Console.WriteLine();
 
-    checkedOutFinal = b.Where(b => b.Status == false).ToList();
-    DisplayMenu(checkedOutFinal);
-    Console.WriteLine($"Goodbye {s}. You have burned down the Library of Alexandria and set human civilization back by a few hundred years!");
     Console.WriteLine(burn);
+    if (b.Count <= 0)
+    {
+        Console.WriteLine();
+        Console.WriteLine("Thanks for nothing!");
+        Console.WriteLine();
+        Environment.Exit(0);
+
+    }
+    else
+    {
+
+        List<Book> checkedOutFinal = new List<Book>();
+        Console.WriteLine();
+        Console.WriteLine("Here is the list of books that you checked out. I guess you get to keep them since the library is in flames. You will now be the smartest person who ever existed!");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+
+        checkedOutFinal = b.Where(b => b.Status == false).ToList();
+        DisplayMenu(checkedOutFinal);
+    }
 
     Environment.Exit(0);
+
 
 
 }
